@@ -7,17 +7,23 @@ const theme = createTheme({
       main: tokens.colors.brown.default,
       light: tokens.colors.brown.light,
       dark: tokens.colors.brown.dark,
+      lightGrey: tokens.colors.neutral[10],
+      lightBorderGrey: tokens.colors.neutral[40],
+      lightButtonBorderGrey: tokens.colors.neutral[20],
     },
     secondary: {
       main: tokens.colors.tan.default,
     },
     background: {
-      default: tokens.colors.neutral[4],
+      default: tokens.colors.neutral[2],
       paper: tokens.colors.neutral[1],
+      lighter: tokens.colors.tan.lighter,
     },
     text: {
       primary: tokens.colors.neutral[90],
-      secondary: tokens.colors.neutral[50],
+      secondary: tokens.colors.neutral[60],
+      white: tokens.colors.neutral[5],
+      footerText: tokens.colors.neutral[30],
     },
   },
   typography: {

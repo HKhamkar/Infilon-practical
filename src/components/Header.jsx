@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -11,12 +12,10 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  Button,
   Container,
 } from "@mui/material";
 import { CgMenu } from "react-icons/cg";
 import Logo from "../assets/svgs/Logo";
-import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -41,6 +40,7 @@ const mainNav = [
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -48,8 +48,8 @@ const Header = () => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+      <Typography component={Link} to="/" variant="h6" sx={{ my: 2 }}>
+        <Logo />
       </Typography>
       <Divider />
       <List>
@@ -59,6 +59,7 @@ const Header = () => {
               sx={{ textAlign: "center" }}
               component={Link}
               to={item.url}
+              selected={location.pathname === item.url}
             >
               <ListItemText primary={item.name} />
             </ListItemButton>
@@ -70,9 +71,14 @@ const Header = () => {
 
   return (
     <>
-      <AppBar component="nav" position="static" color="background">
+      <AppBar
+        component="nav"
+        position="static"
+        color="background.default"
+        sx={{ boxShadow: "none" }}
+      >
         <Container sx={{ padding: "0 !important" }}>
-          <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Toolbar sx={{ justifyContent: "space-between", py: 0.5 }}>
             <Box
               component={Link}
               to="/"
@@ -83,18 +89,32 @@ const Header = () => {
                 textDecoration: "none",
               }}
             >
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Logo />
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                }}
+              >
+                <Box display={{ xs: "none", sm: "inline-block" }}>
+                  <Logo />
+                </Box>
+                <Box display={{ xs: "inline-block", sm: "none" }} mt={0.5}>
+                  <Logo height="34" />
+                </Box>
               </Typography>
 
               <Typography
                 variant="h3"
                 sx={{
-                  fontSize: "20px",
                   fontFamily: "Gluten, cursive",
                   display: {
                     xs: "none",
                     sm: "inline-block",
+                  },
+                  fontSize: {
+                    sm: "16px",
+                    md: "20px",
                   },
                 }}
                 color="primary.main"
@@ -103,17 +123,38 @@ const Header = () => {
               </Typography>
             </Box>
 
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Box
+              sx={{
+                display: { xs: "none", sm: "flex" },
+                gap: { sm: "12px", md: "24px" },
+              }}
+            >
               {mainNav.map((item) => (
-                <Button
+                <Box
                   key={item.name}
                   color="text.primary"
                   component={Link}
                   to={item.url}
-                  sx={{ fontSize: "16px" }}
+                  sx={{
+                    fontSize: {
+                      sm: "14px",
+                      md: "16px",
+                    },
+                    fontWeight: 400,
+                    padding: 0,
+                    paddingBottom: 0.2,
+                    borderBottom: "2px solid transparent",
+                    borderColor:
+                      location.pathname === item.url && "text.primary",
+                    borderRadius: 0,
+                    textDecoration: "none",
+                    "&:hover": {
+                      borderColor: "text.primary",
+                    },
+                  }}
                 >
                   {item.name}
-                </Button>
+                </Box>
               ))}
             </Box>
 
